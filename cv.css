@@ -1,0 +1,34 @@
+/* Fumito · plantillas del CV. Siempre negro sobre blanco: es un documento para imprimir. */
+.cv { font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#111; font-size:10.5pt; line-height:1.45; }
+.cv a { color:inherit; text-decoration:none; }
+.cv h1 { margin:0; font-size:22pt; font-weight:700; letter-spacing:-.01em; }
+.cv .titulo { font-size:12pt; color:#444; margin:2px 0 0; }
+.cv .contacto { font-size:9.5pt; color:#444; margin:6px 0 0; display:flex; flex-wrap:wrap; gap:4px 14px; }
+.cv h2 { font-size:10pt; text-transform:uppercase; letter-spacing:.12em; margin:16px 0 6px; padding-bottom:3px; }
+.cv p { margin:0 0 6px; }
+.cv .proyecto { margin:0 0 9px; page-break-inside:avoid; }
+.cv .proyecto .cab { display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
+.cv .proyecto .nombre { font-weight:700; }
+.cv .proyecto .periodo { font-size:9pt; color:#666; white-space:nowrap; }
+.cv .proyecto .stack { font-size:9pt; color:#555; }
+.cv .proyecto .url { font-size:8.5pt; color:#777; }
+.cv .habilidades { display:flex; flex-wrap:wrap; gap:6px; }
+.cv .habilidades span { border:1px solid #bbb; border-radius:4px; padding:1px 7px; font-size:9pt; }
+.cv .habilidades span b { font-weight:600; }
+.cv .exp { margin:0 0 8px; page-break-inside:avoid; }
+.cv .exp .cab { display:flex; justify-content:space-between; gap:10px; }
+.cv .exp .donde { font-weight:700; }
+.cv .exp .que { color:#444; }
+.cv .exp .cuando { font-size:9pt; color:#666; white-space:nowrap; }
+.cv .pie { margin-top:14px; font-size:8pt; color:#999; }
+
+/* Clásica: una columna, líneas finas. */
+.cv.clasica h2 { border-bottom:1px solid #111; }
+
+/* Moderna: cabecera con banda y dos columnas. */
+.cv.moderna .cabeza { background:#1e1e2e; color:#fff; margin:-18mm -16mm 12px; padding:14mm 16mm 10mm; }
+.cv.moderna .cabeza .titulo, .cv.moderna .cabeza .contacto { color:#cdd6f4; }
+.cv.moderna .cuerpo { display:grid; grid-template-columns:2fr 1fr; gap:22px; }
+.cv.moderna h2 { color:#8839ef; border-bottom:2px solid #8839ef; }
+.cv.moderna .habilidades span { border-color:#c9c1ea; background:#f3efff; }
+@media print { .cv.moderna .cabeza { margin:-16mm -14mm 12px; padding:12mm 14mm 9mm; } }

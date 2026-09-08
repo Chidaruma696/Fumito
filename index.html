@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fumito · CV desde tus repos</title>
+<meta name="description" content="Genera tu CV a partir de tus repositorios de GitHub. Todo ocurre en tu navegador; nada se guarda en ningún servidor.">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="cv.css">
+<script>(function(){try{var t=localStorage.getItem('fumito:tema');if(t)document.documentElement.dataset.tema=t;}catch(e){}})();</script>
+</head>
+<body>
+<header class="cabecera">
+  <h1>Fu<span>mito</span></h1>
+  <span class="kicker">tu CV a partir de tus repositorios de GitHub · nada sale de tu navegador</span>
+  <button id="btnTema" class="icono" title="Cambiar tema">☾</button>
+</header>
+
+<main class="tablero">
+  <aside class="panel">
+
+    <section class="paso" id="paso1">
+      <h2><span class="num">1</span> Tu GitHub</h2>
+      <div class="fila">
+        <input id="usuario" placeholder="usuario de GitHub" autocomplete="off" spellcheck="false">
+        <button id="btnCargar" class="primario">Cargar</button>
+      </div>
+      <details class="detalle">
+        <summary>Token personal (opcional)</summary>
+        <p class="sub">Sin token, GitHub permite 60 peticiones por hora y solo ve repos públicos. Con un <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">token de solo lectura</a> sube a 5000 e incluye los privados que elijas. Se guarda únicamente en este navegador.</p>
+        <div class="fila">
+          <input id="token" type="password" placeholder="github_pat_…" autocomplete="off">
+          <button id="btnOlvidarToken">Olvidar</button>
+        </div>
+      </details>
+      <p id="estadoApi" class="sub"></p>
+    </section>
+
+    <section class="paso" id="paso2" hidden>
+      <h2><span class="num">2</span> Repositorios</h2>
+      <p class="sub">Marca los que cuentan. Por defecto van los tuyos con actividad, sin forks ni archivados.</p>
+      <div class="fila compacta">
+        <label><input type="checkbox" id="verForks"> forks</label>
+        <label><input type="checkbox" id="verArchivados"> archivados</label>
+        <button id="btnNinguno" class="chico">ninguno</button>
+        <button id="btnTodos" class="chico">todos</button>
+      </div>
+      <ul id="listaRepos" class="repos"></ul>
+      <div class="fila">
+        <button id="btnAnalizar" class="primario">Analizar seleccionados</button>
+        <span id="presupuesto" class="sub"></span>
+      </div>
+    </section>
+
+    <section class="paso" id="paso3" hidden>
+      <h2><span class="num">3</span> Lo que GitHub no sabe</h2>
+      <div class="campos">
+        <label>Nombre <input id="nombre"></label>
+        <label>Puesto al que aspiras <input id="titulo" placeholder="Desarrollador Android · Backend en Rust · …"></label>
+        <label>Correo <input id="correo" type="email"></label>
+        <label>Ciudad <input id="ciudad"></label>
+        <label>Web o portfolio <input id="web"></label>
+        <label>Resumen <textarea id="resumen" rows="4"></textarea><span class="sub">Borrador generado con tus lenguajes y proyectos. Edítalo a tu gusto.</span></label>
+      </div>
+      <h3>Experiencia <button id="btnMasExp" class="chico">+ añadir</button></h3>
+      <div id="experiencia" class="bloques"></div>
+      <h3>Formación <button id="btnMasEdu" class="chico">+ añadir</button></h3>
+      <div id="educacion" class="bloques"></div>
+    </section>
+
+    <section class="paso" id="paso4" hidden>
+      <h2><span class="num">4</span> Plantilla y exportar</h2>
+      <div class="fila">
+        <label>Plantilla
+          <select id="plantilla">
+            <option value="clasica">Clásica</option>
+            <option value="moderna">Moderna</option>
+          </select>
+        </label>
+        <label>Idioma
+          <select id="idioma">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+      </div>
+      <div class="fila">
+        <button id="btnPdf" class="primario">Guardar PDF</button>
+        <button id="btnMd">Copiar Markdown</button>
+        <button id="btnJson">Descargar datos</button>
+        <label class="chico">cargar datos <input type="file" id="archivoJson" accept="application/json" hidden></label>
+      </div>
+      <p class="sub">"Guardar PDF" abre el diálogo de impresión: elige "Guardar como PDF". Los datos que escribes se quedan en este navegador para la próxima vez.</p>
+    </section>
+
+  </aside>
+
+  <section class="escenario">
+    <div id="hoja" class="hoja"><div class="vacio">Carga un usuario para ver el CV aquí.</div></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
