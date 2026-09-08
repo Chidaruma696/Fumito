@@ -1,93 +1,93 @@
-[🇬🇧 English](README.en.md)
+[🇪🇸 Español](README.es.md)
 
 <div align="center">
   <br/>
 
 # Fumito
 
-**履歴 · Tu CV a partir de tus repositorios de GitHub. Nada sale de tu navegador.**
+**履歴 · Your résumé, built from your GitHub repositories. Nothing leaves your browser.**
 
 <br/>
 
-[![Abrir Fumito](https://img.shields.io/badge/abrir-chidaruma696.github.io%2FFumito-8839ef?style=for-the-badge&logo=github&logoColor=white)](https://chidaruma696.github.io/Fumito/)
-![Sin servidor](https://img.shields.io/badge/servidor-ninguno-1b150d?style=for-the-badge)
-![Sin IA](https://img.shields.io/badge/IA-ninguna-1b150d?style=for-the-badge)
-![Licencia MIT](https://img.shields.io/badge/licencia-MIT-1b150d?style=for-the-badge)
+[![Open Fumito](https://img.shields.io/badge/open-chidaruma696.github.io%2FFumito-8839ef?style=for-the-badge&logo=github&logoColor=white)](https://chidaruma696.github.io/Fumito/)
+![No server](https://img.shields.io/badge/server-none-1b150d?style=for-the-badge)
+![No AI](https://img.shields.io/badge/AI-none-1b150d?style=for-the-badge)
+![MIT License](https://img.shields.io/badge/license-MIT-1b150d?style=for-the-badge)
 
 <br/>
 
-*escribes tu usuario · eliges repos · contestas cinco cosas · sale el PDF*
+*type your username · pick your repos · answer five things · out comes the PDF*
 
 </div>
 
 ---
 
 > [!NOTE]
-> Fumito es una sola página estática. Habla directamente con la API pública de GitHub desde tu navegador, guarda lo que escribes en tu `localStorage` y genera el PDF con el diálogo de impresión. No hay backend, no hay cuenta, no hay inteligencia artificial: solo reglas.
+> Fumito is a single static page. It talks directly to GitHub's public API from your browser, keeps what you type in your `localStorage`, and produces the PDF through the print dialog. There is no backend, no account, no artificial intelligence: just rules. The interface is currently in Spanish.
 
 <br/>
 
-## 📄 Qué es
+## 📄 What it is
 
-Un currículum técnico se escribe mal por una razón: obliga a resumir de memoria proyectos que ya están explicados, con detalle, en sus repositorios. Fumito les da la vuelta:
+Technical résumés come out badly for one reason: they force you to summarize, from memory, projects that are already explained in detail in their repositories. Fumito turns that around:
 
-| 🔍 Lee | 🧠 Deduce | ✍️ Pregunta |
+| 🔍 Reads | 🧠 Infers | ✍️ Asks |
 | --- | --- | --- |
-| Tus repos, lenguajes, temas, estrellas, licencias y fechas por la API de GitHub | Qué es cada proyecto, a partir del primer párrafo útil de su README | Lo que GitHub no sabe: nombre, puesto, correo, teléfono, ciudad, LinkedIn, web, foto |
-| El README de cada repo que marques | Tu stack real, ponderando bytes de código de todos los repos elegidos | Experiencia con logros, formación, habilidades con nivel, idiomas, certificaciones, intereses |
-| Tu perfil público y tu avatar para prellenar lo que pueda | Un borrador de resumen con tus lenguajes y temas, que editas o borras | Plantilla, color, idioma y qué secciones mostrar |
+| Your repos, languages, topics, stars, licenses and dates, through the GitHub API | What each project is, from the first useful paragraph of its README | What GitHub does not know: name, job title, email, phone, city, LinkedIn, website, photo |
+| The README of every repo you check | Your real stack, weighting code bytes across all selected repos | Experience with achievements, education, skills with levels, languages, certifications, interests |
+| Your public profile and avatar, to prefill whatever it can | A draft summary built from your languages and topics, which you edit or delete | Template, color, language and which sections to show |
 
-Descarta forks, archivados y repos sin actividad en dos años por defecto; tú decides al final qué entra.
-
-<br/>
-
-## 🧪 Cómo se usa
-
-1. Abre [chidaruma696.github.io/Fumito](https://chidaruma696.github.io/Fumito/) y escribe tu usuario de GitHub.
-2. Marca los repos que cuentan. Cada uno cuesta dos peticiones a la API; sin token GitHub da 60 por hora, de sobra para un CV.
-3. Pulsa **Analizar**: Fumito trae lenguajes y README de cada repo y monta el CV a la derecha.
-4. Corrige las descripciones de los proyectos, añade logros y ordénalos. Rellena datos de contacto, foto (tu avatar de GitHub o una imagen tuya), resumen, experiencia con logros clave, formación, habilidades con nivel, idiomas, certificaciones e información adicional.
-5. Elige plantilla (clásica de una columna, moderna con banda y lateral, o lateral con barra oscura), color, idioma (español o inglés) y **Guardar PDF**. También puedes copiar el CV en Markdown o descargar tus datos en JSON para retomarlos en otro navegador.
-
-### Token opcional
-
-Si tienes muchos repos o quieres incluir privados, pega un [token de solo lectura](https://github.com/settings/tokens?type=beta) en el desplegable del paso 1. Sube el límite a 5000 peticiones por hora y lista también tus repos privados. Se guarda solo en tu navegador y se borra con "Olvidar".
+It drops forks, archived repos and repos with no activity in two years by default; you get the final say on what goes in.
 
 <br/>
 
-## 🔧 Cómo funciona
+## 🧪 How to use it
+
+1. Open [chidaruma696.github.io/Fumito](https://chidaruma696.github.io/Fumito/) and type your GitHub username.
+2. Check the repos that count. Each one costs two API requests; without a token GitHub allows 60 per hour, more than enough for a résumé.
+3. Press **Analizar** (Analyze): Fumito fetches the languages and README of each repo and assembles the résumé on the right.
+4. Fix the project descriptions, add achievements and reorder them. Fill in contact details, photo (your GitHub avatar or a picture of your own), summary, experience with key achievements, education, skills with levels, languages, certifications and additional information.
+5. Pick a template (classic single column, modern with a band and sidebar, or sidebar with a dark bar), color, language (Spanish or English) and **Guardar PDF** (Save PDF). You can also copy the résumé as Markdown or download your data as JSON to pick it up again in another browser.
+
+### Optional token
+
+If you have many repos or want to include private ones, paste a [read-only token](https://github.com/settings/tokens?type=beta) into the dropdown in step 1. It raises the limit to 5,000 requests per hour and also lists your private repos. It is stored only in your browser and is erased with "Olvidar" (Forget).
+
+<br/>
+
+## 🔧 How it works
 
 ```
 Fumito/
-├── index.html   la página, cuatro pasos y la hoja A4
-├── app.js       API de GitHub, extracción de descripciones, modelo del CV, plantillas y exportación
-├── styles.css   interfaz de la app (Catppuccin Latte de día, Mocha de noche)
-└── cv.css       las tres plantillas del CV, con un color de acento a tu elección
+├── index.html   the page: four steps and the A4 sheet
+├── app.js       GitHub API, description extraction, résumé model, templates and export
+├── styles.css   app interface (Catppuccin Latte by day, Mocha by night)
+└── cv.css       the three résumé templates, with an accent color of your choice
 ```
 
-- **Descripción de cada proyecto**: se limpia el README (badges, imágenes, código, HTML, enlaces, énfasis) y se toma el primer párrafo de más de 60 caracteres que sea texto de verdad, recortado a dos frases. Si no hay README, la descripción del repo.
-- **Habilidades**: suma de bytes por lenguaje en los repos elegidos, en porcentaje y como barra relativa al lenguaje principal; se muestran las que pasan del 2 %, más las que añadas a mano con su nivel.
-- **Periodo**: año de creación hasta el último *push*; "actual" si hubo actividad en los últimos seis meses.
-- **Stack por proyecto**: los tres lenguajes principales más hasta tres temas del repo que no repitan un lenguaje.
-- **Resumen automático**: una plantilla con tus lenguajes principales, temas frecuentes y estrellas. Se regenera si lo dejas tal cual y cambias de idioma; si lo editas, se respeta.
+- **Description of each project**: the README is cleaned up (badges, images, code, HTML, links, emphasis) and the first paragraph over 60 characters that is actual prose is taken, trimmed to two sentences. If there is no README, the repo description is used.
+- **Skills**: sum of bytes per language across the selected repos, as a percentage and as a bar relative to the main language; those above 2% are shown, plus any you add by hand with their level.
+- **Period**: creation year through the last *push*; "current" if there was activity in the last six months.
+- **Stack per project**: the three main languages plus up to three repo topics that do not duplicate a language.
+- **Automatic summary**: a template built from your main languages, frequent topics and stars. It is regenerated if you leave it untouched and switch languages; if you edit it, your version is kept.
 
-Sin dependencias, sin *build*, sin empaquetador: se sirve tal cual desde GitHub Pages.
+No dependencies, no *build* step, no bundler: it is served as is from GitHub Pages.
 
 <br/>
 
-## 🔬 Desarrollo
+## 🔬 Development
 
 ```bash
 git clone https://github.com/Chidaruma696/Fumito.git
 cd Fumito
-python -m http.server 8080     # cualquier servidor estático vale
+python -m http.server 8080     # any static server will do
 ```
 
-Abre `http://localhost:8080`. Al usar `file://` el navegador bloquea las peticiones a la API, por eso el servidor.
+Open `http://localhost:8080`. Under `file://` the browser blocks the API requests, hence the server.
 
 <br/>
 
-## ⚖️ Licencia
+## ⚖️ License
 
 [MIT](LICENSE).
 
@@ -95,7 +95,7 @@ Abre `http://localhost:8080`. Al usar `file://` el navegador bloquea las peticio
 
 <div align="center">
 
-*Tus repos ya lo dicen todo.*
+*Your repos already say it all.*
 
 履歴 · りれき
 
