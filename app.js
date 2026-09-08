@@ -18,7 +18,7 @@
   };
   var estado = { usuario: '', perfil: null, repos: [], seleccion: {}, detalles: {}, datos: Object.assign({}, DATOS_VACIOS) };
   try { var g = JSON.parse(localStorage.getItem('fumito:datos') || 'null'); if (g) estado.datos = Object.assign({}, DATOS_VACIOS, g); } catch (e) {}
-  try { $('token').value = localStorage.getItem('fumito:token') || ''; } catch (e) {}
+  try { $('token').value = localStorage.getItem('fumito:token') || sessionStorage.getItem('fumito:token') || ''; $('recordarToken').checked = !!localStorage.getItem('fumito:token'); } catch (e) {}
   try { $('usuario').value = localStorage.getItem('fumito:usuario') || ''; } catch (e) {}
 
   function guardar() { try { localStorage.setItem('fumito:datos', JSON.stringify(estado.datos)); } catch (e) {} }
@@ -61,8 +61,17 @@
   // ------------------------------------------------------------------ paso 1: usuario y repos
   $('btnCargar').addEventListener('click', cargarUsuario);
   $('usuario').addEventListener('keydown', function (e) { if (e.key === 'Enter') cargarUsuario(); });
-  $('btnOlvidarToken').addEventListener('click', function () { $('token').value = ''; try { localStorage.removeItem('fumito:token'); } catch (e) {} });
-  $('token').addEventListener('change', function () { try { localStorage.setItem('fumito:token', $('token').value.trim()); } catch (e) {} });
+  function guardarToken() {
+    var t = $('token').value.trim();
+    try {
+      localStorage.removeItem('fumito:token'); sessionStorage.removeItem('fumito:token');
+      if (!t) return;
+      if ($('recordarToken').checked) localStorage.setItem('fumito:token', t); else sessionStorage.setItem('fumito:token', t);
+    } catch (e) {}
+  }
+  $('btnOlvidarToken').addEventListener('click', function () { $('token').value = ''; guardarToken(); });
+  $('token').addEventListener('change', guardarToken);
+  $('recordarToken').addEventListener('change', guardarToken);
 
   function cargarUsuario() {
     var u = $('usuario').value.trim().replace(/^@/, '');
@@ -152,6 +161,8 @@
   // ------------------------------------------------------------------ paso 2: analizar
   $('btnAnalizar').addEventListener('click', function () {
     var elegidos = estado.repos.filter(function (r) { return estado.seleccion[r.full_name]; });
+    var pendientes = elegidos.filter(function (r) { return !estado.detalles[r.full_name]; }).length * 2;
+    if (restantes != null && pendientes > restantes && !confirm('Esto necesita ' + pendientes + ' peticiones y a GitHub le quedan ' + restantes + ' en esta hora. Lo más probable es que se corte a medias. ¿Seguir igual? (Con un token no pasa.)')) return;
     var btn = $('btnAnalizar'); btn.disabled = true; btn.textContent = 'Analizando…';
     var cola = elegidos.slice();
     function siguiente() {
@@ -506,7 +517,7 @@
     return s;
   }
   function pie(m) { return m.datos.verPie ? '<div class="pie">' + m.t.pie + esc(m.usuario) + '</div>' : ''; }
-  function fotoHtml(m) { return m.foto ? '<img class="foto" src="' + m.foto + '" alt="">' : ''; }
+  function fotoHtml(m) { return m.foto ? '<img class="foto" src="' + esc(m.foto) + '" alt="">' : ''; }
 
   function render() {
     if (!estado.perfil) return;
@@ -527,7 +538,22 @@
         + seccionResumen(m) + seccionExperiencia(m) + seccionProyectos(m) + seccionHabilidades(m) + seccionIdiomas(m) + seccionEducacion(m) + seccionCertificaciones(m) + seccionExtra(m) + pie(m) + '</div>';
     }
     $('hoja').innerHTML = html;
+    ajustarEscala();
   }
+
+  /** La hoja A4 se escala para llenar el espacio disponible: más grande en pantallas anchas, más chica en el móvil. */
+  function ajustarEscala() {
+    var lienzo = $('lienzo'), hoja = $('hoja'), escenario = lienzo.parentElement;
+    var disponible = escenario.clientWidth - 36;
+    var anchoHoja = hoja.offsetWidth || 794;
+    var escala = Math.min(1.35, Math.max(0.3, disponible / anchoHoja));
+    hoja.style.transform = 'scale(' + escala + ')';
+    lienzo.style.width = Math.round(anchoHoja * escala) + 'px';
+    lienzo.style.height = Math.round(hoja.offsetHeight * escala) + 'px';
+  }
+  window.addEventListener('resize', ajustarEscala);
+  if (window.ResizeObserver) new ResizeObserver(ajustarEscala).observe(document.querySelector('.escenario'));
+  ajustarEscala();
 
   function oscurecer(hex) {
     var n = parseInt(hex.slice(1), 16); if (isNaN(n)) return '#16283f';

@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fumito · CV desde tus repos</title>
 <meta name="description" content="Genera tu CV a partir de tus repositorios de GitHub. Todo ocurre en tu navegador; nada se guarda en ningún servidor.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta name="referrer" content="no-referrer">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="cv.css">
-<script>(function(){try{var t=localStorage.getItem('fumito:tema');if(t)document.documentElement.dataset.tema=t;}catch(e){}})();</script>
+<script src="tema.js"></script>
 </head>
 <body>
 <header class="cabecera">
@@ -32,6 +34,9 @@
         <div class="fila">
           <input id="token" type="password" placeholder="github_pat_…" autocomplete="off">
           <button id="btnOlvidarToken">Olvidar</button>
+        </div>
+        <div class="fila compacta">
+          <label><input type="checkbox" id="recordarToken"> recordar el token en este navegador (si no, se olvida al cerrar la pestaña)</label>
         </div>
       </details>
       <p id="estadoApi" class="sub"></p>
@@ -172,7 +177,7 @@
   </aside>
 
   <section class="escenario">
-    <div id="hoja" class="hoja"><div class="vacio">Carga un usuario para ver el CV aquí.</div></div>
+    <div id="lienzo" class="lienzo"><div id="hoja" class="hoja"><div class="vacio">Carga un usuario para ver el CV aquí.</div></div></div>
   </section>
 </main>
 
