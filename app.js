@@ -14,7 +14,7 @@
     intereses: '', adicional: '',
     proyectos: {},                     // full_name -> { descripcion, logros, orden, oculto }
     plantilla: 'clasica', idioma: 'es', acento: '#1f3b63',
-    verProyectos: true, verBarras: true, verPie: true
+    verProyectos: true, verBarras: true, verPie: true, maxProyectos: 10
   };
   var estado = { usuario: '', perfil: null, repos: [], seleccion: {}, detalles: {}, datos: Object.assign({}, DATOS_VACIOS) };
   try { var g = JSON.parse(localStorage.getItem('fumito:datos') || 'null'); if (g) estado.datos = Object.assign({}, DATOS_VACIOS, g); } catch (e) {}
@@ -119,7 +119,7 @@
     var ul = $('listaRepos'); ul.innerHTML = '';
     var candidatos = estado.repos.filter(esCandidato);
     estado.repos.forEach(function (r) {
-      if (estado.seleccion[r.full_name] == null) estado.seleccion[r.full_name] = candidatos.indexOf(r) > -1 && candidatos.indexOf(r) < 10;
+      if (estado.seleccion[r.full_name] == null) estado.seleccion[r.full_name] = candidatos.indexOf(r) > -1 && candidatos.indexOf(r) < estado.datos.maxProyectos;
       var li = document.createElement('li');
       li.dataset.fork = r.fork ? '1' : ''; li.dataset.archivado = r.archived ? '1' : ''; li.dataset.nombre = r.full_name;
       li.innerHTML = '<input type="checkbox" ' + (estado.seleccion[r.full_name] ? 'checked' : '') + '>'
@@ -254,8 +254,8 @@
     lista.forEach(function (r, i) {
       var a = ajusteProyecto(r.full_name); a.orden = i;
       var d = estado.detalles[r.full_name];
-      var div = document.createElement('div'); div.className = 'bloque';
-      div.innerHTML = '<div class="cabeza">' + esc(r.name) + '</div>'
+      var div = document.createElement('div'); div.className = 'bloque' + (i >= estado.datos.maxProyectos ? ' fuera' : '');
+      div.innerHTML = '<div class="cabeza">' + (i + 1) + '. ' + esc(r.name) + (i >= estado.datos.maxProyectos ? '<span class="etq">fuera del CV</span>' : '') + '</div>'
         + '<label class="ancho">Descripción<textarea data-k="descripcion" rows="2"></textarea></label>'
         + '<label class="ancho">Logros (uno por línea)<textarea data-k="logros" rows="2"></textarea></label>'
         + '<div class="acciones"><button class="chico" data-a="arriba">▲</button><button class="chico" data-a="abajo">▼</button></div>';
@@ -283,6 +283,7 @@
     CAMPOS.forEach(function (k) { $(k).value = d[k] || ''; });
     $('plantilla').value = d.plantilla; $('idioma').value = d.idioma; $('acento').value = d.acento;
     $('verProyectos').checked = d.verProyectos; $('verBarras').checked = d.verBarras; $('verPie').checked = d.verPie;
+    $('maxProyectos').value = String(d.maxProyectos);
     $('fotoFuente').value = d.fotoFuente; pintarFoto();
     ['experiencia', 'educacion', 'habilidades', 'idiomas', 'certificaciones'].forEach(pintarBloques);
   }
@@ -363,6 +364,15 @@
   }
 
   // ------------------------------------------------------------------ paso 4: plantilla, exportar
+  $('maxProyectos').addEventListener('change', function () { estado.datos.maxProyectos = parseInt($('maxProyectos').value, 10); guardar(); pintarProyectos(); render(); });
+  $('btnLimpiar').addEventListener('click', function () {
+    if (!confirm('Se borran los datos que escribiste, la selección de repos y el CV. El token se conserva. ¿Seguir?')) return;
+    estado.datos = Object.assign({}, DATOS_VACIOS); estado.seleccion = {}; estado.detalles = {}; estado.repos = []; estado.perfil = null;
+    try { localStorage.removeItem('fumito:datos'); } catch (e) {}
+    pintarDatos(); $('listaRepos').innerHTML = ''; $('proyectos').innerHTML = '';
+    $('paso2').hidden = true; $('paso3').hidden = true; $('paso4').hidden = true; $('edicionProyectos').hidden = true;
+    $('hoja').innerHTML = '<div class="vacio">Carga un usuario para ver el CV aquí.</div>'; aviso('');
+  });
   $('plantilla').addEventListener('change', function () { estado.datos.plantilla = $('plantilla').value; guardar(); render(); });
   $('acento').addEventListener('input', function () { estado.datos.acento = $('acento').value; guardar(); render(); });
   ['verProyectos', 'verBarras', 'verPie'].forEach(function (k) { $(k).addEventListener('change', function () { estado.datos[k] = $(k).checked; guardar(); render(); }); });
@@ -401,7 +411,7 @@
 
   function modelo() {
     var t = L[estado.datos.idioma], d = estado.datos;
-    var proyectos = proyectosOrdenados().map(function (r) {
+    var proyectos = proyectosOrdenados().slice(0, estado.datos.maxProyectos).map(function (r) {
       var det = estado.detalles[r.full_name], a = ajusteProyecto(r.full_name);
       var langs = Object.keys(det.lenguajes || {}).sort(function (x, y) { return det.lenguajes[y] - det.lenguajes[x]; }).slice(0, 3);
       var langsMin = langs.map(function (l) { return l.toLowerCase(); });

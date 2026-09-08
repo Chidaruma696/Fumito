@@ -13,6 +13,7 @@
 <header class="cabecera">
   <h1>Fu<span>mito</span></h1>
   <span class="kicker">tu CV a partir de tus repositorios de GitHub · nada sale de tu navegador</span>
+  <button id="btnLimpiar" class="chico" title="Borra datos, selección y CV de este navegador">Limpiar todo</button>
   <button id="btnTema" class="icono" title="Cambiar tema">☾</button>
 </header>
 
@@ -40,6 +41,13 @@
       <h2><span class="num">2</span> Repositorios</h2>
       <p class="sub">Marca los que cuentan. Por defecto van los tuyos con actividad, sin forks ni archivados.</p>
       <div class="fila compacta">
+        <label>En el CV, máximo
+          <select id="maxProyectos">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+        </label>
         <label><input type="checkbox" id="verForks"> forks</label>
         <label><input type="checkbox" id="verArchivados"> archivados</label>
         <button id="btnNinguno" class="chico">ninguno</button>
@@ -52,7 +60,7 @@
       </div>
       <div id="edicionProyectos" hidden>
         <h3>Proyectos en el CV</h3>
-        <p class="sub">Corrige la descripción, añade logros (uno por línea) y ordena. Lo que no toques sale como lo dedujo Fumito.</p>
+        <p class="sub">Corrige la descripción, añade logros (uno por línea) y ordena. Solo entran al CV los primeros según el máximo elegido; el resto queda atenuado.</p>
         <div id="proyectos" class="bloques"></div>
       </div>
     </section>
