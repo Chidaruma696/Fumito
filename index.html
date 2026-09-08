@@ -20,6 +20,17 @@
 </header>
 
 <main class="tablero">
+  <section class="escenario">
+    <div class="barraZoom">
+      <button id="zoomMenos" class="chico" title="Alejar">−</button>
+      <span id="zoomValor">100 %</span>
+      <button id="zoomMas" class="chico" title="Acercar">+</button>
+      <button id="zoomAjustar" class="chico" title="Ajustar al ancho">Ajustar</button>
+      <button id="zoomReal" class="chico" title="Tamaño real">100 %</button>
+    </div>
+    <div class="visor"><div id="lienzo" class="lienzo"><div id="hoja" class="hoja"><div class="vacio">Carga un usuario para ver el CV aquí.</div></div></div></div>
+  </section>
+
   <aside class="panel">
 
     <section class="paso" id="paso1">
@@ -175,10 +186,6 @@
     </section>
 
   </aside>
-
-  <section class="escenario">
-    <div id="lienzo" class="lienzo"><div id="hoja" class="hoja"><div class="vacio">Carga un usuario para ver el CV aquí.</div></div></div>
-  </section>
 </main>
 
 <script src="app.js"></script>

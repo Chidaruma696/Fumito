@@ -542,17 +542,31 @@
   }
 
   /** La hoja A4 se escala para llenar el espacio disponible: más grande en pantallas anchas, más chica en el móvil. */
+  var zoomManual = null;   // null = ajustar al ancho
   function ajustarEscala() {
-    var lienzo = $('lienzo'), hoja = $('hoja'), escenario = lienzo.parentElement;
-    var disponible = escenario.clientWidth - 36;
+    var lienzo = $('lienzo'), hoja = $('hoja'), visor = lienzo.parentElement;
     var anchoHoja = hoja.offsetWidth || 794;
-    var escala = Math.min(1.35, Math.max(0.3, disponible / anchoHoja));
+    var escala = zoomManual != null ? zoomManual : Math.max(0.25, (visor.clientWidth - 16) / anchoHoja);
     hoja.style.transform = 'scale(' + escala + ')';
     lienzo.style.width = Math.round(anchoHoja * escala) + 'px';
     lienzo.style.height = Math.round(hoja.offsetHeight * escala) + 'px';
+    $('zoomValor').textContent = Math.round(escala * 100) + ' %';
   }
+  function zoomPaso(delta) {
+    var actual = parseFloat($('hoja').style.transform.replace(/[^\d.]/g, '')) || 1;
+    zoomManual = Math.min(3, Math.max(0.25, Math.round((actual + delta) * 20) / 20));
+    ajustarEscala();
+  }
+  $('zoomMas').addEventListener('click', function () { zoomPaso(0.1); });
+  $('zoomMenos').addEventListener('click', function () { zoomPaso(-0.1); });
+  $('zoomAjustar').addEventListener('click', function () { zoomManual = null; ajustarEscala(); });
+  $('zoomReal').addEventListener('click', function () { zoomManual = 1; ajustarEscala(); });
+  document.querySelector('.visor').addEventListener('wheel', function (e) {
+    if (!e.ctrlKey) return;
+    e.preventDefault(); zoomPaso(e.deltaY < 0 ? 0.1 : -0.1);
+  }, { passive: false });
   window.addEventListener('resize', ajustarEscala);
-  if (window.ResizeObserver) new ResizeObserver(ajustarEscala).observe(document.querySelector('.escenario'));
+  if (window.ResizeObserver) new ResizeObserver(ajustarEscala).observe(document.querySelector('.visor'));
   ajustarEscala();
 
   function oscurecer(hex) {
