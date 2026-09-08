@@ -50,22 +50,83 @@
         <button id="btnAnalizar" class="primario">Analizar seleccionados</button>
         <span id="presupuesto" class="sub"></span>
       </div>
+      <div id="edicionProyectos" hidden>
+        <h3>Proyectos en el CV</h3>
+        <p class="sub">Corrige la descripción, añade logros (uno por línea) y ordena. Lo que no toques sale como lo dedujo Fumito.</p>
+        <div id="proyectos" class="bloques"></div>
+      </div>
     </section>
 
     <section class="paso" id="paso3" hidden>
       <h2><span class="num">3</span> Lo que GitHub no sabe</h2>
-      <div class="campos">
-        <label>Nombre <input id="nombre"></label>
-        <label>Puesto al que aspiras <input id="titulo" placeholder="Desarrollador Android · Backend en Rust · …"></label>
-        <label>Correo <input id="correo" type="email"></label>
-        <label>Ciudad <input id="ciudad"></label>
-        <label>Web o portfolio <input id="web"></label>
-        <label>Resumen <textarea id="resumen" rows="4"></textarea><span class="sub">Borrador generado con tus lenguajes y proyectos. Edítalo a tu gusto.</span></label>
-      </div>
-      <h3>Experiencia <button id="btnMasExp" class="chico">+ añadir</button></h3>
-      <div id="experiencia" class="bloques"></div>
-      <h3>Formación <button id="btnMasEdu" class="chico">+ añadir</button></h3>
-      <div id="educacion" class="bloques"></div>
+
+      <details class="grupo" open>
+        <summary>Datos y contacto</summary>
+        <div class="campos">
+          <label>Nombre <input id="nombre"></label>
+          <label>Puesto o titular <input id="titulo" placeholder="Ingeniero de software · Desarrollador Android · …"></label>
+          <div class="dos">
+            <label>Correo <input id="correo" type="email"></label>
+            <label>Teléfono <input id="telefono" placeholder="+52 …"></label>
+          </div>
+          <div class="dos">
+            <label>Ciudad <input id="ciudad"></label>
+            <label>LinkedIn <input id="linkedin" placeholder="linkedin.com/in/…"></label>
+          </div>
+          <label>Web o portfolio <input id="web"></label>
+          <label>Foto
+            <div class="fila compacta">
+              <select id="fotoFuente">
+                <option value="ninguna">sin foto</option>
+                <option value="github">avatar de GitHub</option>
+                <option value="archivo">subir imagen</option>
+              </select>
+              <input type="file" id="fotoArchivo" accept="image/*" hidden>
+              <button id="btnFoto" class="chico" hidden>elegir archivo</button>
+              <img id="fotoVista" class="fotoVista" alt="" hidden>
+            </div>
+          </label>
+        </div>
+      </details>
+
+      <details class="grupo" open>
+        <summary>Resumen</summary>
+        <label><textarea id="resumen" rows="5"></textarea><span class="sub">Borrador generado con tus lenguajes y proyectos. Edítalo a tu gusto.</span></label>
+      </details>
+
+      <details class="grupo" open>
+        <summary>Experiencia <button id="btnMasExp" class="chico">+ añadir</button></summary>
+        <div id="experiencia" class="bloques"></div>
+      </details>
+
+      <details class="grupo">
+        <summary>Formación <button id="btnMasEdu" class="chico">+ añadir</button></summary>
+        <div id="educacion" class="bloques"></div>
+      </details>
+
+      <details class="grupo">
+        <summary>Habilidades <button id="btnMasHab" class="chico">+ añadir</button></summary>
+        <p class="sub">Los lenguajes salen solos de tus repos. Añade aquí herramientas, frameworks o habilidades blandas con su nivel.</p>
+        <div id="habilidades" class="bloques"></div>
+      </details>
+
+      <details class="grupo">
+        <summary>Idiomas <button id="btnMasIdi" class="chico">+ añadir</button></summary>
+        <div id="idiomas" class="bloques"></div>
+      </details>
+
+      <details class="grupo">
+        <summary>Certificaciones <button id="btnMasCer" class="chico">+ añadir</button></summary>
+        <div id="certificaciones" class="bloques"></div>
+      </details>
+
+      <details class="grupo">
+        <summary>Información adicional</summary>
+        <div class="campos">
+          <label>Intereses <input id="intereses" placeholder="Anime, Linux, retro computing…"></label>
+          <label>Otros datos (uno por línea) <textarea id="adicional" rows="3" placeholder="Disponibilidad para trabajar en remoto&#10;Disponibilidad para viajar"></textarea></label>
+        </div>
+      </details>
     </section>
 
     <section class="paso" id="paso4" hidden>
@@ -73,8 +134,9 @@
       <div class="fila">
         <label>Plantilla
           <select id="plantilla">
-            <option value="clasica">Clásica</option>
-            <option value="moderna">Moderna</option>
+            <option value="clasica">Clásica · una columna</option>
+            <option value="moderna">Moderna · banda y lateral derecha</option>
+            <option value="lateral">Lateral · barra oscura izquierda</option>
           </select>
         </label>
         <label>Idioma
@@ -83,6 +145,12 @@
             <option value="en">English</option>
           </select>
         </label>
+        <label>Color <input type="color" id="acento" value="#1f3b63"></label>
+      </div>
+      <div class="fila compacta">
+        <label><input type="checkbox" id="verProyectos" checked> proyectos</label>
+        <label><input type="checkbox" id="verBarras" checked> barras de nivel</label>
+        <label><input type="checkbox" id="verPie" checked> pie "generado con"</label>
       </div>
       <div class="fila">
         <button id="btnPdf" class="primario">Guardar PDF</button>
@@ -90,7 +158,7 @@
         <button id="btnJson">Descargar datos</button>
         <label class="chico">cargar datos <input type="file" id="archivoJson" accept="application/json" hidden></label>
       </div>
-      <p class="sub">"Guardar PDF" abre el diálogo de impresión: elige "Guardar como PDF". Los datos que escribes se quedan en este navegador para la próxima vez.</p>
+      <p class="sub">"Guardar PDF" abre el diálogo de impresión: elige "Guardar como PDF", tamaño A4 y activa "gráficos de fondo" para que salgan los colores. Los datos que escribes se quedan en este navegador para la próxima vez.</p>
     </section>
 
   </aside>
